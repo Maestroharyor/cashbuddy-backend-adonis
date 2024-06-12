@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import User from '#models/user'
-import BudgetCategory from './budget_category.js'
+import BudgetPlanCategory from '#models/budget_plan_category'
 
 export default class BudgetPlan extends BaseModel {
   @column({ isPrimary: true })
@@ -17,8 +17,8 @@ export default class BudgetPlan extends BaseModel {
   @column()
   declare isPrimaryPlan: boolean
 
-  @column()
-  declare categories: BudgetCategory[]
+  @hasMany(() => BudgetPlanCategory)
+  declare categories: HasMany<typeof BudgetPlanCategory>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
